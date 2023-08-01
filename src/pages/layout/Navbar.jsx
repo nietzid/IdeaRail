@@ -2,6 +2,7 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Link } from 'react-router-dom'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -12,7 +13,7 @@ export default function Navbar() {
     <Disclosure as="nav" className="bg-white shadow">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-full px-2 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-full px-2 sm:px-6 lg:px-8 dark:bg-gray-800 ">
             <div className="relative flex h-16 justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button */}
@@ -47,17 +48,17 @@ export default function Navbar() {
                     Dashboard
                   </a>
                   <a
-                    href="#"
+                    href="/projects"
                     className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
                   >
                     Projects
                   </a>
-                  <a
-                    href="#"
+                  <Link
+                    to="/resources"
                     className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
                   >
                     Resources
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
