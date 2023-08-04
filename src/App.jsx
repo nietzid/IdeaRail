@@ -10,6 +10,12 @@ import ResourceLeft from './pages/resources/ResourceLeft'
 import ResourceRight from './pages/resources/ResourceRight'
 import ProjectsLeft from './pages/projects/ProjectsLeft'
 import ProjectsRight from './pages/projects/ProjectsRight'
+import SprintOne from './pages/sprintone/SprintOne'
+import SprintTwo from './pages/sprinttwo/SprintTwo'
+import SprintThree from './pages/sprintthree/SprintThree'
+import SprintFour from './pages/sprintfour/SprintFour'
+import SprintFive from './pages/sprintfive/SprintFive'
+import SprintSix from './pages/sprintsix/SprintSix'
 
 
 function App() {
@@ -32,6 +38,42 @@ function App() {
           <>
             <Navbar/>
             <ProjectsRight/>
+          </>
+        } />
+        <Route path="/sprint-one" element={
+          <>
+            <Navbar/>
+            <SprintOne/>
+          </>
+        } />
+        <Route path="/sprint-two" element={
+          <>
+            <Navbar/>
+            <SprintTwo/>
+          </>
+        } />
+        <Route path="/sprint-three" element={
+          <>
+            <Navbar/>
+            <SprintThree/>
+          </>
+        } />
+        <Route path="/sprint-four" element={
+          <>
+            <Navbar/>
+            <SprintFour/>
+          </>
+        } />
+        <Route path="/sprint-five" element={
+          <>
+            <Navbar/>
+            <SprintFive/>
+          </>
+        } />
+        <Route path="/sprint-six" element={
+          <>
+            <Navbar/>
+            <SprintSix/>
           </>
         } />
       </Routes>
