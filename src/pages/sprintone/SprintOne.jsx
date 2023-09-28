@@ -7,8 +7,6 @@ import SprintForm from './SprintForm';
 import Lottie from "lottie-react";
 import EmptyAnimation from '../../assets/lottie/empty.json';
 import {Typography} from '@material-tailwind/react';
-
-
 // import { NotificationDialog } from '../layout/NotificationDialog'
 
 export default function SprintOne() {
@@ -81,7 +79,7 @@ export default function SprintOne() {
             <main className='mx-4 md:mx-16'>
                 <div className="mx-auto max-w-full mx-8 py-6 sm:px-6 lg:px-8 flex flex-col border-4 border-dashed rounded-3xl border-gray-200 mx-4 px-4">
                     <div className="flex flex-row rounded-lg max-h-24">
-                        <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-gray-900 my-auto">Tentukan Spesific!</h1>
+                        <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-gray-900 my-auto">Yuk Sampaikan Idemu!</h1>
                         <div className='max-h-full my-auto'>
                             <button type="button"
                                 onClick={
@@ -93,7 +91,7 @@ export default function SprintOne() {
                             </button>
                         </div>
                     </div>
-                    <div className="flex flex-row rounded-lg max-h-fit ml-0 overflow-x-scroll no-scrollbar min-h-[320px] mt-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 rounded-lg min-h-[320px] mt-4">
                         {
                         sprintData ?. filter((data) => {
                             return data.category == 'spesific'
@@ -101,9 +99,9 @@ export default function SprintOne() {
                             let votes=voteData?.filter(vote => {
                                 return vote.sprint_id==data.id
                             });
-                            return data.category == 'spesific' && <ResponseCard key={
-                                    data.id
-                                }
+                            return data.category == 'spesific' && 
+                            <ResponseCard 
+                                key={data.id}
                                 data={data}
                                 votes={votes}/>
                         }) : <div className='mx-auto'>
@@ -115,7 +113,7 @@ export default function SprintOne() {
                     } </div>
                 </div>
 
-                <div className="mx-auto max-w-full mt-8 mx-8 py-6 sm:px-6 lg:px-8 flex flex-col border-4 border-dashed rounded-3xl border-gray-200 mx-4 px-4">
+                {/* <div className="mx-auto max-w-full mt-8 mx-8 py-6 sm:px-6 lg:px-8 flex flex-col border-4 border-dashed rounded-3xl border-gray-200 mx-4 px-4">
                     <div className="flex flex-row rounded-lg max-h-24">
                         <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-gray-900 my-auto">Tentukan Measurable!</h1>
                         <div className='max-h-full my-auto'>
@@ -219,7 +217,7 @@ export default function SprintOne() {
                             <Typography as='h1' color='gray' className='text-2xl font-bold text-center'>Belum ada data</Typography>
                         </div>
                     } </div>
-                </div>
+                </div> */}
             </main>
             <SprintForm isOpen={isOpen}
                 setIsOpen={setIsOpen}

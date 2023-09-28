@@ -15,7 +15,7 @@ export default function ResponseCard({data, votes}) {
     const [isLoading, setIsloading] = useState(true);
 
     function handleCheck(uuid) {
-        return votes?.some(item => uuid == item.uuid);
+        return votes ?. some(item => uuid == item.uuid);
     }
     useEffect(() => {
         setIsloading(handleCheck(user.id));
@@ -39,7 +39,7 @@ export default function ResponseCard({data, votes}) {
     }
 
     return (
-        <Card className="m-4 ml-0 w-[320px] h-auto border-4 justify-between">
+        <Card className="m-4 ml-0 w-auto h-auto border-4 justify-between">
             <CardBody>
                 <Typography variant="h5" color="blue-gray" className="mb-2 truncate font-bold">
                     {
@@ -49,21 +49,51 @@ export default function ResponseCard({data, votes}) {
                     data.content
                 } </Typography>
             </CardBody>
-            <CardFooter className="pt-0 flex flex-row mx-auto">
-                <Button disabled={
+            <CardFooter className="pt-0 grid grid-cols-2 md:grid-cols-4 mx-auto">
+                <Button 
+                    disabled={
                         isLoading ? true : false
                     }
                     className={
-                        `mr-2 flex flex-row items-center justify-center ${
+                        `mr-2 mb-2 flex flex-row items-center justify-center ${
                             isLoading ? 'bg-blue-400' : 'bg-blue-600'
                         }`
                     }
                     onClick={
                         () => handleUpVote()
                 }>
-                    <CheckCircleIcon className="h-6 w-6 font-bold mr-1"/>
-                    Vote {votes?.length} </Button>
+                    Spesific {
+                    votes ?. length
+                } </Button>
+                <Button disabled={
+                        isLoading ? true : false
+                    }
+                    className={
+                        `mr-2 mb-2 flex flex-row items-center justify-center ${
+                            isLoading ? 'bg-blue-400' : 'bg-blue-600'
+                        }`
+                    }
+                    onClick={
+                        () => handleUpVote()
+                }>
+                    Measurable {
+                    votes ?. length
+                } </Button>
+                <Button disabled={
+                        isLoading ? true : false
+                    }
+                    className={
+                        `mr-2 mb-2 flex flex-row items-center justify-center ${
+                            isLoading ? 'bg-blue-400' : 'bg-blue-600'
+                        }`
+                    }
+                    onClick={
+                        () => handleUpVote()
+                }>
+                    Timely <br />{
+                    votes ?. length
+                } </Button>
             </CardFooter>
         </Card>
     );
-}
+}   
