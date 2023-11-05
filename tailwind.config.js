@@ -11,6 +11,7 @@ export default {
     require('@tailwindcss/aspect-ratio'),
     require('flowbite/plugin'),
     require('@tailwindcss/line-clamp'),
+    require('daisyui'),
   ],
 }
 

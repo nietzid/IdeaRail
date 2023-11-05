@@ -20,7 +20,7 @@ export default function RegisterRight() {
         e.preventDefault();
         setLoading(true);
         if (e.target.password.value != e.target.confirmPassword.value) {
-            alert('Passwords do not match');
+            alert('Password tidak cocok!');
         } else {
             try {
                 const {data, error} = await supabase.auth.signUp({
@@ -41,7 +41,7 @@ export default function RegisterRight() {
                             username: e.target.username.value,
                             user_group: e.target.groupId.value
                         },])
-                        alert('Account created successfully, please check your email for verification')
+                        alert('Pendaftaran akun berhasil! Silahkan cek email untuk konfirmasi.')
                         navigate('/login');
                     }
                 })
@@ -52,12 +52,12 @@ export default function RegisterRight() {
     }
 
     return (
-        <div className="flex justify-center items-center min-h-full my-auto">
+        <div className="flex justify-center items-center min-h-full my-auto mb-4">
             <div className="min-w-full mx-auto">
                 <div className="bg-white shadow-md border border-gray-200 rounded-lg md:mx-12 p-4 sm:p-4 lg:p-8 dark:bg-gray-800 dark:border-gray-700">
                     <form className="space-y-6"
                         onSubmit={handleSubmit}>
-                        <h3 className="text-xl font-medium text-gray-900 dark:text-white">Register to our platform</h3>
+                        <h3 className="text-xl font-medium text-gray-900 dark:text-white">Daftar ke IdeaRail</h3>
                         <div>
                             <label htmlFor="username" className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300">Nama</label>
                             <input type="text" name="username" id="username" placeholder="Masukan Nama Kamu" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
@@ -101,9 +101,8 @@ export default function RegisterRight() {
                             </div> : "Register"
                         } </button>
                         <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
-                            Have an Account?
-                            <Link to="/login" className="text-blue-700 hover:underline dark:text-blue-500">
-                                Sign In</Link>
+                            Sudah punya akun?
+                            <Link to="/login" className="text-blue-700 hover:underline dark:text-blue-500"> Masuk disini.</Link>
                         </div>
                     </form>
                 </div>
