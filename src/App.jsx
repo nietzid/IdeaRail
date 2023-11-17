@@ -4,8 +4,6 @@ import LeftAndRightLayout from './pages/layout/LeftAndRightLayout'
 import Navbar from './components/Navbar'
 import LoginLeft from './pages/login/LoginLeft'
 import LoginRight from './pages/login/LoginRight'
-import ResourceLeft from './pages/resources/ResourceLeft'
-import ResourceRight from './pages/resources/ResourceRight'
 import ProjectsRight from './pages/projects/ProjectsRight'
 import SprintOne from './pages/sprintone/SprintOne'
 import SprintTwo from './pages/sprinttwo/SprintTwo'
@@ -17,7 +15,7 @@ import RegisterRight from './pages/register/RegisterRight'
 import PrivateRoutes from './components/PrivateRoutes'
 import ProjectsLayout from './pages/projects/ProjectsLayout'
 import Home from './pages/home/Home'
-
+import ResourceLayout from './pages/resources/ResourceLayout'
 
 function App() {
   return (
@@ -36,7 +34,7 @@ function App() {
               <Home/>
               } />
           <Route path="/resources" element={
-              <LeftAndRightLayout HideMob={true} Center={false} Navbar={()=> <Navbar/>} LeftLayout={() => <ResourceLeft/>} RightLayout={() => <ResourceRight/>}/>
+              <ResourceLayout HideMob={true} Center={false} Navbar={()=> <Navbar/>}/>
           } />
           <Route path="/projects" element={
               <ProjectsLayout HideMob={true} Center={true} CenterRight={false} Navbar={()=> <Navbar/>}/>

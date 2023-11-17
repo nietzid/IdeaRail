@@ -4,9 +4,11 @@ import ProjectsCard from "../../components/ProjectsCard";
 import ProjectsFormCard from "./ProjectsFormCard";
 import supabase from "../../Supabase";
 import { useAuth } from "../../context/AuthProvider";
+import ProjectDetailPopup from "./ProjectDetailPopup";
 
 export default function ProjectsLeft({ currentProject, setCurrentProject }) {
   let [isOpen, setIsOpen] = useState(false);
+  let [isOpenDetail, setIsOpenDetail] = useState(false);
   let [projectsData, setProjectsData] = useState();
   const { user } = useAuth();
 
@@ -20,6 +22,7 @@ export default function ProjectsLeft({ currentProject, setCurrentProject }) {
   }
 
   async function getProjects() {
+    console.log(user);
     // let { data: projects, error } = await supabase.from("projects").select("*").then((res) => {
     //     if (res.error) console.log(error);
     //     else setProjectsData(res.data);
@@ -34,6 +37,11 @@ export default function ProjectsLeft({ currentProject, setCurrentProject }) {
         else setProjectsData(res.data);
       });
   }
+
+  function updateProjectId(id){
+    setIsOpenDetail(true);
+    setCurrentProject(id);
+}
 
   const subscribe = () =>
     supabase
@@ -81,14 +89,16 @@ export default function ProjectsLeft({ currentProject, setCurrentProject }) {
           {projectsData ? (
             projectsData.map((project, index) => {
               return (
-                <ProjectsCard
-                  key={index}
-                  id={project.id}
-                  title={project.title}
-                  description={project.description}
-                  progress={project.progress}
-                  setCurrentProject={setCurrentProject}
-                />
+                <div
+                  onClick={() => updateProjectId(project.id)}
+                >
+                  <ProjectsCard
+                    key={index}
+                    title={project.title}
+                    description={project.description}
+                    progress={project.progress}
+                  />
+                </div>
               );
             })
           ) : (
@@ -99,6 +109,11 @@ export default function ProjectsLeft({ currentProject, setCurrentProject }) {
         </div>
       </div>
       <ProjectsFormCard isOpen={isOpen} setIsOpen={setIsOpen} />
+      <ProjectDetailPopup
+        isOpen={isOpenDetail}
+        setIsOpen={() => setIsOpenDetail(false)}
+        projectsId={currentProject}
+      />
     </>
   );
 }

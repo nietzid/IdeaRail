@@ -1,9 +1,53 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
 import ResourceCard from "../../components/ResourceCard";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import supabase from "../../Supabase";
+import ResourcePopup from "./ResourcePopup";
 
 export default function Home() {
+  const [resources, setResources] = useState();
+  const [resource, setResource] = useState();
+  const [lastProject, setLastProject] = useState();
+  const [showResources, setShowResources] = useState(false);
+  async function getResources() {
+    await supabase
+      .from("materi")
+      .select("*")
+      .then(({ data, error }) => {
+        if (error) {
+          console.log(error);
+        } else {
+          setResources(data);
+        }
+      });
+  }
+
+  async function getLastProject() {
+    await supabase
+      .from('projects')
+      .select('*')
+      .order('updated_at', { ascending: false })
+      .limit(1)
+      .then(({ data, error }) => {
+        if (error) {
+          console.log(error);
+        }else{
+          setLastProject(data);
+        }
+      });
+  }
+
+  useEffect(() => {
+    getResources();
+    getLastProject();
+  }, []);
+
+  useEffect(() => {
+    if(lastProject?.length)setLastProject(lastProject[0]);
+  }, [lastProject]);
+
+  console.log(lastProject);
   return (
     <>
       <Navbar />
@@ -24,16 +68,12 @@ export default function Home() {
           </div>
           <main className="-mt-36">
             <div className="flex justify-end w-full pr-4 md:hidden">
-            
               <button
                 type="button"
                 className="inline-flex items-center rounded-md border border-transparent bg-white px-6 py-3 text-base font-medium text-indigo-600 shadow-sm hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
                 Project Baru
-                <PlusCircleIcon
-                          className="ml-1 h-5 w-5"
-                          aria-hidden="true"
-                        />
+                <PlusCircleIcon className="ml-1 h-5 w-5" aria-hidden="true" />
               </button>
             </div>
             <div className="mx-auto">
@@ -43,14 +83,9 @@ export default function Home() {
                   <h2 className="card-title text-2xl font-bold">
                     Project Terakhir
                   </h2>
-                  <p className="font-bold text-xl">Title</p>
+                  <p className="font-bold text-xl">{lastProject?.title}</p>
                   <p className="text-black">
-                    {" "}
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy text ever since the 1500s, when an unknown
-                    printer took a galley of type and scrambled it to make a
-                    type specimen book.{" "}
+                    {lastProject?.description}
                   </p>
                   <div className="card-actions justify-end">
                     <button
@@ -69,14 +104,27 @@ export default function Home() {
                   <section aria-labelledby="section-1-title">
                     <div className="overflow-hidden rounded-lg mb-4">
                       <div>
-                        
-                        <h1 className="text-2xl md:text-3xl text-indigo-800 md:text-white font-bold pl-1">
+                        <h1 className="text-2xl md:text-3xl text-indigo-800 md:text-white font-bold pl-2 my-4">
                           Rekomendasi Materi
                         </h1>
-                        <ResourceCard />
-                        <ResourceCard />
-                        <ResourceCard />
-                        <ResourceCard />
+                        <div className="flex flex-col gap-2">
+                          {resources?.map((resource, index) => (
+                            <div
+                              onClick={() => {
+                                setResource(resources[index]);
+                                setShowResources(true);
+                              }}
+                            >
+                              <ResourceCard
+                                resource={resource}
+                                key={resource.id}
+                                title={resource.judul}
+                                description={resource.deskripsi}
+                                link={resource.link}
+                              />
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </section>
@@ -89,26 +137,20 @@ export default function Home() {
                       <div>
                         <div className="card glass mx-auto">
                           <div className="card-body text-white">
-                            <h2 className="card-title text-2xl font-bold">
-                              Project Terakhir
+                            <h2 className="card-title text-2xl md:text-3xl font-bold">
+                              {lastProject.title}
                             </h2>
                             <p className="font-bold text-xl">Title</p>
                             <p className="text-black">
-                              {" "}
-                              Lorem Ipsum is simply dummy text of the printing
-                              and typesetting industry. Lorem Ipsum has been the
-                              industry's standard dummy text ever since the
-                              1500s, when an unknown printer took a galley of
-                              type and scrambled it to make a type specimen
-                              book.{" "}
+                              {lastProject.description}
                             </p>
                             <div className="card-actions justify-end">
-                              <button
+                              <a
                                 type="button"
                                 className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                               >
                                 Lanjutkan
-                              </button>
+                              </a>
                             </div>
                           </div>
                         </div>
@@ -121,6 +163,11 @@ export default function Home() {
           </main>
         </div>
       </div>
+      <ResourcePopup
+      resource={resource}
+        isOpen={showResources}
+        onClose={() => setShowResources(false)}
+      />
     </>
   );
 }

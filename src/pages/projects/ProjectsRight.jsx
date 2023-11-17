@@ -2,8 +2,9 @@ import {ArrowRightIcon, ChevronRightIcon, RocketLaunchIcon} from '@heroicons/rea
 import React, {useEffect, useState} from 'react'
 import supabase from '../../Supabase';
 import {Link} from 'react-router-dom';
-import Lottie from "lottie-react";
 import RocketAnimation from '../../assets/lottie/rocket.json';
+import NotFoundAnimation from '../../assets/lottie/not-found.json';
+import Lottie from 'lottie-react';
 
 export default function ProjectsRight({currentProject, setCurrentProject}) {
     const [projectsData, setProjectsData] = useState(null);
@@ -15,7 +16,6 @@ export default function ProjectsRight({currentProject, setCurrentProject}) {
 
     async function getProjects() {
         await supabase.from('projects').select('*').eq('id', currentProject).then((res) => {
-            console.log(res);
             if (res.error) 
                 console.log(error);
              else 
@@ -26,10 +26,10 @@ export default function ProjectsRight({currentProject, setCurrentProject}) {
 
     if(currentProject != null){
         return (
-            <>{console.log(projectsData)} 
+            <>
             {
                 projectsData?.progress != 0? 
-                    <div className='border shadow rounded-xl p-6 md:p-12 mx-auto my-auto'>
+                    <div className='border shadow rounded-xl md:p-12 mx-auto my-auto'>
                         <h1 className='text-4xl font-bold'>
                             Judul Project
                         </h1>
@@ -70,12 +70,15 @@ export default function ProjectsRight({currentProject, setCurrentProject}) {
                             </button>
                         </div>
                     </div> 
-                : 
+                :
                 <div className='border shadow rounded-xl p-6 md:p-12 mx-auto my-auto'>
                     <Lottie animationData={RocketAnimation} loop={true} className='h-64 w-auto'/>
                     <h6 className="mb-4 text-xl font-bold text-center text-gray-800 md:text-3xl">
                         <p className="font-extra-bold">Project {projectsData?.title} belum dimulai!</p>
                     </h6>
+                    <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 text-center">
+                        Kamu belum memulai project ini, klik tombol dibawah untuk memulai
+                    </p>
 
                     <div className='flex justify-center mt-2'>
                         <Link to={`/sprint-one`} state={{ projectId: {currentProject} }}>
@@ -91,13 +94,9 @@ export default function ProjectsRight({currentProject, setCurrentProject}) {
     }else{
         return(
             <div className='border shadow rounded-xl p-6 md:p-12 mx-auto my-auto'>
-                {/* <div >
-                    <img class="rounded-t-lg max-h-60" src="img/projects_banner.png" alt="" />
-                    <img class="h-auto max-w-xl rounded-lg shadow-xl dark:shadow-gray-800" src="img/projects_banner.png" alt="image description"/>
-
-                </div> */}
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Kamu belum memilih project!</h5>
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">Pilih salah satu project yang sudah kamu buat untuk memulai</p>
+                <Lottie animationData={NotFoundAnimation} loop={true} className='h-64 w-auto'/>
             </div>
         )
     }

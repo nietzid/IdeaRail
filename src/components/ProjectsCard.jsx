@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
-export default function ProjectsCard({title, description, progress, id, setCurrentProject}) {
+export default function ProjectsCard({title, description, progress}) {
     
-    function updateProjectId(){
-        setCurrentProject(id);
-        ReactSession.set("projectId", id);
-    }
     return (
-        <div onClick={() => updateProjectId()} role='button' className="relative flex w-full h-25 md:h-40 flex-row rounded-xl bg-white bg-clip-border text-gray-700 shadow-md border my-2 p-1 md:my-4 overflow-hidden">
+        <div role='button' className="relative flex w-full h-25 md:h-40 flex-row rounded-xl bg-white bg-clip-border text-gray-700 shadow-md border my-2 p-1 md:my-4 overflow-hidden">
             <div className="p-2 w-full md:p-6 flex-col overflow-hidden">
                 <h1 className="block font-bold text-lg md:text-xl font-medium leading-relaxed text-blue-gray-900 antialiased ">
                     {title}
