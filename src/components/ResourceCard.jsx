@@ -11,7 +11,7 @@ export default function ResourceCard({ title, description, link }) {
           src={
             "https://i.ytimg.com/vi/" +
             videoId +
-            "/default.jpg"
+            "/sddefault.jpg"
           }
           className="h-full w-full object-cover"
         />
