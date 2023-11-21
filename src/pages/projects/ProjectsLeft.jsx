@@ -5,6 +5,9 @@ import ProjectsFormCard from "./ProjectsFormCard";
 import supabase from "../../Supabase";
 import { useAuth } from "../../context/AuthProvider";
 import ProjectDetailPopup from "./ProjectDetailPopup";
+import LoadingAnimation from "../../assets/lottie/loading.json";
+import Lottie from "lottie-react";
+
 
 export default function ProjectsLeft({ currentProject, setCurrentProject }) {
   let [isOpen, setIsOpen] = useState(false);
@@ -22,26 +25,22 @@ export default function ProjectsLeft({ currentProject, setCurrentProject }) {
   }
 
   async function getProjects() {
-    console.log(user);
-    // let { data: projects, error } = await supabase.from("projects").select("*").then((res) => {
-    //     if (res.error) console.log(error);
-    //     else setProjectsData(res.data);
-    //   });
-
     await supabase
       .from("projects")
       .select("*")
       .eq("group_id", user.user_metadata.group_id)
       .then((res) => {
         if (res.error) console.log(error);
-        else setProjectsData(res.data);
+        else {
+          setProjectsData(res.data);
+        }
       });
   }
 
-  function updateProjectId(id){
+  function updateProjectId(id) {
     setIsOpenDetail(true);
     setCurrentProject(id);
-}
+  }
 
   const subscribe = () =>
     supabase
@@ -85,13 +84,11 @@ export default function ProjectsLeft({ currentProject, setCurrentProject }) {
             New Project
           </button>
         </div>
-        <div className="overflow-y-auto md:max-h-[45rem] no-scrollbar">
+        <div className="overflow-y-auto flex flex-col gap-4 no-scrollbar mt-8">
           {projectsData ? (
             projectsData.map((project, index) => {
               return (
-                <div
-                  onClick={() => updateProjectId(project.id)}
-                >
+                <div onClick={() => updateProjectId(project.id)} key={index}>
                   <ProjectsCard
                     key={index}
                     title={project.title}
@@ -102,8 +99,18 @@ export default function ProjectsLeft({ currentProject, setCurrentProject }) {
               );
             })
           ) : (
-            <div className="flex justify-center items-center min-h-full">
-              <p className="text-2xl font-bold text-gray-400">Loading...</p>
+            <div className="p-6 md:p-12 mx-auto my-auto">
+              <Lottie
+                animationData={LoadingAnimation}
+                loop={true}
+                className="h-64 w-auto"
+              />
+              <h6 className="mb-4 text-xl font-bold text-center text-gray-800 md:text-3xl">
+                <p className="font-extra-bold">Loading Project...</p>
+              </h6>
+              <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 text-center">
+                Mohon tunggu sebentar ya!
+              </p>
             </div>
           )}{" "}
         </div>

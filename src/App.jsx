@@ -16,6 +16,7 @@ import PrivateRoutes from './components/PrivateRoutes'
 import ProjectsLayout from './pages/projects/ProjectsLayout'
 import Home from './pages/home/Home'
 import ResourceLayout from './pages/resources/ResourceLayout'
+import Result from './pages/result/Result'
 
 function App() {
   return (
@@ -79,6 +80,12 @@ function App() {
             <>
               <Navbar/>
               <SprintSix/>
+            </>
+          } />
+          <Route path="/result" element={
+            <>
+              <Navbar/>
+              <Result/>
             </>
           } />
         </Route>

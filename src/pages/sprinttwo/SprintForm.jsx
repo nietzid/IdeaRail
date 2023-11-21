@@ -28,43 +28,33 @@ export default function SprintForm({
           {
             project_id: projectId,
             creator: user.user_metadata.username,
-            category: "1",
+            category: "2",
           },
         ])
         .select()
         .then(async (res) => {
-          console.log(res);
           await supabase
             .from("sprint_details")
             .insert([
               {
-                category: "spesific",
-                content: e.target.spesific.value,
+                category: "user",
+                content: e.target.user.value,
                 sprint_id: res.data[0].id,
               },
               {
-                category: "measurable_before",
-                content: e.target.measurablebefore.value,
+                category: "existing_process",
+                content: e.target.existing_process.value,
                 sprint_id: res.data[0].id,
               },
               {
-                category: "measurable_after",
-                content: e.target.measurableafter.value,
-                sprint_id: res.data[0].id,
-              },
-              {
-                category: "timely",
-                content: e.target.timely.value,
-                sprint_id: res.data[0].id,
-              },
-              {
-                category: "challenge",
-                content: e.target.challenge.value,
+                category: "goals",
+                content: e.target.goals.value,
                 sprint_id: res.data[0].id,
               },
             ])
             .select()
             .then((res) => {
+              console.log(res);
               setIsLoading(false);
               setNotificationMessage(`Ide berhasil dibuat!`);
               setIsOpenDialog(true);
@@ -114,84 +104,49 @@ export default function SprintForm({
                           htmlFor="spesific"
                           className="block mb-2 text-lg font-medium text-gray-900 dark:text-white"
                         >
-                          Spesific
+                          User
                         </label>
                         <textarea
-                          name="spesific"
-                          id="content"
-                          cols="30"
-                          rows="3"
-                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Masalah spesifik yang ingin diselesaikan, contoh: Meningkatkan kedisiplinan siswa dalam hal kehadiran di SMA Bina Nusantara"
-                          required
-                        ></textarea>
-                      </div>
-                      <div>
-                        <p className="block mb-2 text-lg font-medium text-gray-900 dark:text-white">
-                          Measurable
-                        </p>
-                        <label
-                          htmlFor="measurablebefore"
-                          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                        >
-                          Sebelum
-                        </label>
-                        <textarea
-                          name="measurablebefore"
-                          id="measurable-before"
+                          name="user"
+                          id="user"
                           cols="30"
                           rows="2"
                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Kondisi sebelum dilakukan project, contoh: Tingkat kehadiran 40%"
-                          required
-                        ></textarea>
-                        <label
-                          htmlFor="measurableafter"
-                          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                        >
-                          Sesudah
-                        </label>
-                        <textarea
-                          name="measurableafter"
-                          id="measurable-after"
-                          cols="30"
-                          rows="2"
-                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Kondisi setelah dilakukan project, contoh: Tingkat kehadiran 90%"
+                          placeholder="Pengguna/orang/pelaku yang melakukan dan terdampak, contoh: Siswa/Civitas Akademi SMP Bina Nusantara/Warga Desa SukaMakmur"
                           required
                         ></textarea>
                       </div>
                       <div>
                         <label
-                          htmlFor="timely"
-                          className="block mb-2 text-lg font-medium text-gray-900 dark:text-white"
+                          htmlFor="existing_process"
+                          className="block mb-2 text-xl font-medium text-gray-900 dark:text-white"
                         >
-                          Timely
+                          Existing Process
                         </label>
                         <textarea
-                          name="timely"
-                          id="timely"
+                          name="existing_process"
+                          id="existing_process"
                           cols="30"
                           rows="3"
                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Durasi project yang akan dikerjakan, contoh: 2 Bulan"
+                          placeholder="Proses yang saat ini terjadi yang ingin kamu selesaikan, contoh: Siswa SMP Bina Nusantara harus mengisi formulir pendaftaran secara manual"
                           required
                         ></textarea>
                       </div>
                       <div>
                         <label
-                          htmlFor="challenge"
+                          htmlFor="goals"
                           className="block mb-2 text-lg font-medium text-gray-900 dark:text-white"
                         >
-                          Kalimat Challenge
+                          Goals
                         </label>
                         <textarea
-                          name="challenge"
-                          id="challenge"
+                          name="goals"
+                          id="goals"
                           cols="30"
-                          rows="5"
+                          rows="3"
                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Kalimat challenge/tantangan yang akan coba diselesaikan, contoh: Bagaimana cara meningkatkan kedisiplinan siswa dalam hal kehadiran di SMA Bina Nusantara dari 40% menjadi 90% dalam waktu 2 bulan ?"
+                          placeholder="Tujuan yang ingin dicapai oleh pengguna, contoh: Siswa SMP Bina Nusantara dapat mendaftar secara online"
                           required
                         ></textarea>
                       </div>

@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import supabase from "../Supabase";
 import { ReactSession } from 'react-client-session';
+import { Navigate } from "react-router-dom";
 
 ReactSession.setStoreType("localStorage");
 const AuthContext = createContext({});
@@ -22,8 +23,9 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const { data } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === "SIGNED_IN" || event === "INITIAL_SESSION") {
-        setUser(session.user);
-        ReactSession.set("user", session.user);
+        // console.log(session?.user)
+        setUser(session?.user);
+        ReactSession.set("user", session?.user);
         setAuth(true);
       }else if (event === "SIGNED_OUT"){
         setUser(null);

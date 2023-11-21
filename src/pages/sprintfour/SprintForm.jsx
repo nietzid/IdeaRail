@@ -1,21 +1,27 @@
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Dialog, Listbox, Transition } from "@headlessui/react";
+import { Fragment, useEffect, useState } from "react";
 import supabase from "../../Supabase";
 import { useAuth } from "../../context/AuthProvider";
 import NotificationDialog from "../../components/NotificationDialog";
+import { ChevronUpIcon } from "@heroicons/react/24/outline";
 
-export default function SprintForm({
-  isOpen,
-  setIsOpen,
-  projectId,
-}) {
+export default function SprintForm({ isOpen, setIsOpen, projectId, optionValue }) {
   const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [isOpenDialog, setIsOpenDialog] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState();
+  const options = [
+    { id: 1, name: "Pain" },
+    { id: 2, name: "Gain" },
+  ];
+  const [selected, setSelected] = useState(options[0]);
 
   function closeModal() {
     setIsOpen(false);
+  }
+
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
   }
 
   async function handleSubmit(e) {
@@ -28,7 +34,7 @@ export default function SprintForm({
           {
             project_id: projectId,
             creator: user.user_metadata.username,
-            category: "1",
+            category: "4",
           },
         ])
         .select()
@@ -38,28 +44,13 @@ export default function SprintForm({
             .from("sprint_details")
             .insert([
               {
-                category: "spesific",
-                content: e.target.spesific.value,
+                category: selected.name?.toLowerCase(),
+                content: e.target.pain_gain.value,
                 sprint_id: res.data[0].id,
               },
               {
-                category: "measurable_before",
-                content: e.target.measurablebefore.value,
-                sprint_id: res.data[0].id,
-              },
-              {
-                category: "measurable_after",
-                content: e.target.measurableafter.value,
-                sprint_id: res.data[0].id,
-              },
-              {
-                category: "timely",
-                content: e.target.timely.value,
-                sprint_id: res.data[0].id,
-              },
-              {
-                category: "challenge",
-                content: e.target.challenge.value,
+                category: "interview_type",
+                content: selected.name,
                 sprint_id: res.data[0].id,
               },
             ])
@@ -75,6 +66,13 @@ export default function SprintForm({
       console.log(error);
     }
   }
+
+  useEffect(() => {
+    if (optionValue) {
+      setSelected(options.filter((item) => item.name == optionValue)[0]);
+    }
+  }
+  , [optionValue]);
 
   return (
     <>
@@ -111,89 +109,100 @@ export default function SprintForm({
                     <form className="space-y-6" onSubmit={handleSubmit}>
                       <div>
                         <label
-                          htmlFor="spesific"
+                          htmlFor="question"
                           className="block mb-2 text-lg font-medium text-gray-900 dark:text-white"
                         >
-                          Spesific
+                          Pain atau Gain
                         </label>
                         <textarea
-                          name="spesific"
-                          id="content"
+                          name="pain_gain"
+                          id="pain_gain"
                           cols="30"
                           rows="3"
                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Masalah spesifik yang ingin diselesaikan, contoh: Meningkatkan kedisiplinan siswa dalam hal kehadiran di SMA Bina Nusantara"
+                          placeholder="Masukan Pain"
                           required
                         ></textarea>
                       </div>
                       <div>
-                        <p className="block mb-2 text-lg font-medium text-gray-900 dark:text-white">
-                          Measurable
-                        </p>
-                        <label
-                          htmlFor="measurablebefore"
-                          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                        >
-                          Sebelum
-                        </label>
-                        <textarea
-                          name="measurablebefore"
-                          id="measurable-before"
-                          cols="30"
-                          rows="2"
-                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Kondisi sebelum dilakukan project, contoh: Tingkat kehadiran 40%"
-                          required
-                        ></textarea>
-                        <label
-                          htmlFor="measurableafter"
-                          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                        >
-                          Sesudah
-                        </label>
-                        <textarea
-                          name="measurableafter"
-                          id="measurable-after"
-                          cols="30"
-                          rows="2"
-                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Kondisi setelah dilakukan project, contoh: Tingkat kehadiran 90%"
-                          required
-                        ></textarea>
-                      </div>
-                      <div>
-                        <label
-                          htmlFor="timely"
-                          className="block mb-2 text-lg font-medium text-gray-900 dark:text-white"
-                        >
-                          Timely
-                        </label>
-                        <textarea
-                          name="timely"
-                          id="timely"
-                          cols="30"
-                          rows="3"
-                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Durasi project yang akan dikerjakan, contoh: 2 Bulan"
-                          required
-                        ></textarea>
-                      </div>
-                      <div>
-                        <label
-                          htmlFor="challenge"
-                          className="block mb-2 text-lg font-medium text-gray-900 dark:text-white"
-                        >
-                          Kalimat Challenge
-                        </label>
-                        <textarea
-                          name="challenge"
-                          id="challenge"
-                          cols="30"
-                          rows="5"
-                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Kalimat challenge/tantangan yang akan coba diselesaikan, contoh: Bagaimana cara meningkatkan kedisiplinan siswa dalam hal kehadiran di SMA Bina Nusantara dari 40% menjadi 90% dalam waktu 2 bulan ?"
-                          required
-                        ></textarea>
+                        <Listbox value={selected} onChange={setSelected}>
+                          {({ open }) => (
+                            <>
+                              <Listbox.Label className="block text-sm font-medium text-gray-700">
+                                Ditujukan untuk
+                              </Listbox.Label>
+                              <div className="relative mt-1">
+                                <Listbox.Button className="relative w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
+                                  <span className="block truncate">
+                                    {selected.name}
+                                  </span>
+                                  <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                    <ChevronUpIcon
+                                      className="h-5 w-5 text-gray-400"
+                                      aria-hidden="true"
+                                    />
+                                  </span>
+                                </Listbox.Button>
+
+                                <Transition
+                                  show={open}
+                                  as={Fragment}
+                                  leave="transition ease-in duration-100"
+                                  leaveFrom="opacity-100"
+                                  leaveTo="opacity-0"
+                                >
+                                  <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                    {options.map((option) => (
+                                      <Listbox.Option
+                                        key={option.id}
+                                        className={({ active }) =>
+                                          classNames(
+                                            active
+                                              ? "text-white bg-indigo-600"
+                                              : "text-gray-900",
+                                            "relative cursor-default select-none py-2 pl-3 pr-9"
+                                          )
+                                        }
+                                        value={option}
+                                      >
+                                        {({ selected, active }) => (
+                                          <>
+                                            <span
+                                              className={classNames(
+                                                selected
+                                                  ? "font-semibold"
+                                                  : "font-normal",
+                                                "block truncate"
+                                              )}
+                                            >
+                                              {option.name}
+                                            </span>
+
+                                            {selected ? (
+                                              <span
+                                                className={classNames(
+                                                  active
+                                                    ? "text-white"
+                                                    : "text-indigo-600",
+                                                  "absolute inset-y-0 right-0 flex items-center pr-4"
+                                                )}
+                                              >
+                                                <CheckIcon
+                                                  className="h-5 w-5"
+                                                  aria-hidden="true"
+                                                />
+                                              </span>
+                                            ) : null}
+                                          </>
+                                        )}
+                                      </Listbox.Option>
+                                    ))}
+                                  </Listbox.Options>
+                                </Transition>
+                              </div>
+                            </>
+                          )}
+                        </Listbox>
                       </div>
                       <button
                         type="submit"

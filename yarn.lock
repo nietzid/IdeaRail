@@ -2338,7 +2338,7 @@ queue-microtask@^1.2.2:
 
 react-client-session@^0.0.8:
   version "0.0.8"
-  resolved "https://registry.npmjs.org/react-client-session/-/react-client-session-0.0.8.tgz"
+  resolved "https://registry.yarnpkg.com/react-client-session/-/react-client-session-0.0.8.tgz#b5b5b5824b4d70490999adceb405dcba88de2b72"
   integrity sha512-wHCTD4lEE8mzl6kxL8viL4q5kGx2TJJNaWdvzmx3KeiMgP+Yv5/Bx476jCpPD0pKc5VvdVuhkH4EM20XqtT/sQ==
 
 react-dom@^18.2.0:
@@ -2809,6 +2809,11 @@ util-deprecate@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
+
+uuid@^9.0.1:
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.1.tgz#e188d4c8853cc722220392c424cd637f32293f30"
+  integrity sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==
 
 vite@^4.4.0:
   version "4.4.3"

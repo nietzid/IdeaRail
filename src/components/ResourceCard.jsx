@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function ResourceCard({ key, title, description, link }) {
+export default function ResourceCard({ title, description, link }) {
   const match = link.match(/(?:embed\/|v=)(.*?)(?:\?|&|$)/);
   const videoId = match && match[1];
   
