@@ -46,12 +46,12 @@ export default function Navbar() {
                 <Link to={'/'} className="flex flex-shrink-0 items-center">
                   <img
                     className="block h-8 w-auto lg:hidden"
-                    src="/public/img/logo.png"
+                    src="img/logo.png"
                     alt="IdeaRail"
                   />
                   <img
                     className="hidden h-8 w-auto lg:block"
-                    src="/public/img/logo.png"
+                    src="img/logo.png"
                     alt="IdeaRail"
                   />
                 </Link>
