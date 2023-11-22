@@ -38,7 +38,7 @@ export default function SprintFive(props) {
   let [isResultOpen, setIsResultOpen] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
   let [showPainAndGain, setShowPainAndGain] = useState(false);
-  let [challenge, setChallenge] = useState();
+  let [challenge, setChallenge] = useState("");
 
   useEffect(() => {
     initProjectId();
@@ -226,11 +226,13 @@ export default function SprintFive(props) {
       )
       .eq("status", "1")
       .eq("category", "1")
+      .eq("project_id", typeof projectId === "object" ? projectId.projectId : projectId)
       .limit(1)
       .then((res) => {
         if (res.error) console.log(res.error);
         else {
           if (res.data != null) {
+            console.log(res);
             setChallenge(
               res.data[0].sprint_details.filter(
                 (item) => item.category == "challenge"

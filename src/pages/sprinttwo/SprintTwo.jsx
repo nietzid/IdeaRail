@@ -86,6 +86,7 @@ export default function SprintTwo(props) {
       )
       .eq("status", "1")
       .eq("category", "1")
+      .eq("project_id", typeof projectId === "object" ? projectId.projectId : projectId)
       .limit(1)
       .then((res) => {
         if (res.error) console.log(res.error);

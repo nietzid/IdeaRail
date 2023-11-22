@@ -33,6 +33,7 @@ export default function Home() {
     await supabase
       .from("projects")
       .select("*")
+      .eq("group_id", user.user_metadata.group_id)
       .order("updated_at", { ascending: false })
       .limit(1)
       .then(({ data, error }) => {
