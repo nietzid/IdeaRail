@@ -228,6 +228,10 @@ export default function SprintFive(props) {
       )
       .eq("status", "1")
       .eq("category", "5")
+      .eq(
+        "project_id",
+        typeof projectId === "object" ? projectId.projectId : projectId
+      )
       .limit(1)
       .then((res) => {
         if (res.error) console.log(res.error);
@@ -443,10 +447,7 @@ export default function SprintFive(props) {
                   sprintData?.map((data, index) => {
                     let votes = voteData;
                     return (
-                      <div
-                        className="mx-auto w-full h-auto"
-                        key={index}
-                      >
+                      <div className="mx-auto w-full h-auto" key={index}>
                         <ResponseCard
                           key={data.id}
                           data={data}

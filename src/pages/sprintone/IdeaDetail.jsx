@@ -46,15 +46,15 @@ export default function IdeaDetail({ isOpen, setIsOpen, sprintData }) {
                 <Dialog.Panel className="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
                   <div className="px-6 py-6 lg:px-8">
                     <div className="flex flex-row justify-between">
-                    <h1 className="text-2xl font-bold mb-2">Detail Ide</h1>
-                    <button
-                      type="button"
-                      className="text-gray-400 hover:text-gray-500"
-                      onClick={closeModal}
-                    >
-                      <span className="sr-only">Close panel</span>
-                      <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                    </button>
+                      <h1 className="text-2xl font-bold mb-2">Detail Ide</h1>
+                      <button
+                        type="button"
+                        className="text-gray-400 hover:text-gray-500"
+                        onClick={closeModal}
+                      >
+                        <span className="sr-only">Close panel</span>
+                        <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                      </button>
                     </div>
                     <p>
                       Silahkan ulas ide yang temanmu berikan, lalu berikan
